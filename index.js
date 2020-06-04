@@ -2,6 +2,7 @@ var fs = require('fs');
 var os = require('os');
 var path = require('path');
 var yaml = require('js-yaml');
+var log4js = require('log4js');
 var telepathy = require('telepathymq');
 var asynk = require('asynk');
 
@@ -22,7 +23,6 @@ if (!config_folder) {
 }
 
 var config = yaml.safeLoad(fs.readFileSync(path.join(config_folder, 'config.yml')));
-
 log4js.configure({
   appenders: { agent: { type: 'file', filename: config.log } },
   categories: { default: { appenders: ['agent'], level: 'error' } }
