@@ -4,16 +4,7 @@ var Sftp = require('ssh2-sftp-client');
 var asynk = require('asynk');
 var folder = require('./src/folder');
 
-module.exports = function(req, data, logger) {
-  var files = null;
-  switch(data.type) {
-    case 'folder':
-      files = folder(data.src);
-  }
-  if (!files) {
-    req.reject('INVALID_SOURCE_TYPE');
-    return logger.error('invalid source type: ' + JSON.stringify(data));
-  }
+module.exports = function(req, data, files, logger) {
   files.done(function(files) {
     req.notify({ status: 'RUNNING', percent: 0 });
     var sftp = new Sftp();
@@ -69,10 +60,20 @@ module.exports = function(req, data, logger) {
     }).then(function() {
       req.resolve({ status: 'DONE' });
       logger.info('backup done');
+    }).catch(function(err) {
+      switch(err.code) {
+        case "ECONNREFUSED":
+          req.reject({ status: 'FAIL', err: 'could not connect to sftp' });
+          break;
+        default:
+          req.reject({ status: 'FAIL', err: 'could not send files to sftp' });
+          break;
+      }
+      logger.error(err);
     });
   });
   files.fail(function(err) {
-    req.reject({ status: 'FAIL', err });
+    req.reject({ status: 'FAIL', err: 'could not list file' });
     logger.error(err);
   });
 }

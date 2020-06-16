@@ -1,9 +1,9 @@
 {
   "name": "@backupnow/agent",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "backupnow agent",
   "scripts": {
-    "start": "node start"
+    "test": "mocha --timeout=10000 --exit"
   },
   "author": "Alexandre Tiertant",
   "homepage": "",
@@ -17,7 +17,10 @@
     "telepathymq": "~0.1.2",
     "inquirer": "~7.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~8.0.1",
+    "node-sftp-server": "~0.3.0"
+  },
   "bin": {
     "backup-agent": "bin/agent.js"
   }

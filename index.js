@@ -55,10 +55,24 @@ asynk.add(fs.readFile).args(config.key, asynk.callback)
       req.reject('INVALID_REQUEST: no backup type');
       return logger.error('no backup type found: ' + JSON.stringify(data));
     }
+
+    var files = null;
+    switch(data.type) {
+      case 'folder':
+        files = folder(data.src);
+    }
+    if (!files) {
+      req.reject('INVALID_SOURCE_TYPE');
+      return logger.error('invalid source type: ' + JSON.stringify(data));
+    }
+
     switch(data.backup.type) {
       case 'sftp':
-      return logger.error('no backup type found: ' + JSON.stringify(data));
-        sftp(req, data, logger);
+        sftp(req, data, files, logger);
+        break;
+      default:
+        req.reject('INVALID_BACKUP_TYPE');
+        logger.error('invalid backup type: ' + JSON.stringify(data));
         break;
     }
   });

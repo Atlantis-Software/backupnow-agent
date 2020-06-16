@@ -24,8 +24,9 @@ module.exports = function(src) {
             return cb();
           }
           if (file.isDirectory()) {
-            recurseReadDir(path.join(src, file.name), cb);
+            return recurseReadDir(path.join(src, file.name), cb);
           }
+          return cb();
         }).serie().asCallback(cb);
       });
     };
