@@ -1,8 +1,9 @@
 {
   "name": "@backupnow/agent",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description": "backupnow agent",
   "scripts": {
+    "start": "node index",
     "test": "mocha --timeout=10000 --exit"
   },
   "author": "Alexandre Tiertant",

@@ -7,6 +7,7 @@ var telepathy = require('telepathymq');
 var asynk = require('asynk');
 
 var sftp = require('./backups/sftp');
+var folder = require('./backups/src/folder');
 
 process.on('uncaughtException', function(err) {
   console.log(err);

@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var Sftp = require('ssh2-sftp-client');
 var asynk = require('asynk');
-var folder = require('./src/folder');
 
 module.exports = function(req, data, files, logger) {
   files.done(function(files) {
