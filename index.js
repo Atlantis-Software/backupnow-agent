@@ -7,6 +7,7 @@ var telepathy = require('telepathymq');
 var asynk = require('asynk');
 
 var sftp = require('./backups/sftp');
+var ftp = require('./backups/ftp');
 var folder = require('./backups/src/folder');
 
 process.on('uncaughtException', function(err) {
@@ -51,6 +52,10 @@ asynk.add(fs.readFile).args(config.key, asynk.callback)
   var connectString = 'tls://' + config.manager.ip + ':' + config.manager.port;
   socket.register('manager', connectString, tlsOptions);
 
+  socket.on('register', function() {
+    logger.info('agent connected to manager');
+  });
+
   socket.on('request', function(req, data) {
     if (!data || !data.backup || !data.backup.type) {
       req.reject('INVALID_REQUEST: no backup type');
@@ -70,6 +75,9 @@ asynk.add(fs.readFile).args(config.key, asynk.callback)
     switch(data.backup.type) {
       case 'sftp':
         sftp(req, data, files, logger);
+        break;
+      case 'ftp':
+        ftp(req, data, files, logger);
         break;
       default:
         req.reject('INVALID_BACKUP_TYPE');

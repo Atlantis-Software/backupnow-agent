@@ -11,12 +11,13 @@
   "dependencies": {
     "asynk": "~0.0.12",
     "commander": "~5.1.0",
+    "ftp": "~0.3.10",
+    "inquirer": "~7.1.0",
     "js-yaml": "~3.13.1",
     "log4js": "~6.3.0",
     "node-forge": "~0.8.0",
     "ssh2-sftp-client": "~5.1.2",
-    "telepathymq": "~0.1.2",
-    "inquirer": "~7.1.0"
+    "telepathymq": "0.1.5"
   },
   "devDependencies": {
     "mocha": "~8.0.1",

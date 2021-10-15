@@ -72,7 +72,7 @@ module.exports = function(req, data, files, logger) {
     });
   });
   files.fail(function(err) {
-    req.reject({ status: 'FAIL', err: 'could not list file' });
+    req.reject({ status: 'FAIL', err: 'could not list files' });
     logger.error(err);
   });
 }
